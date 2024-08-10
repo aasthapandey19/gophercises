@@ -22,7 +22,34 @@ func main() {
 	if err != nil {
 		exit(fmt.Sprintf("Error in parsing csv file: %s\n", *csvFilename))
 	}
-	fmt.Println(lines)
+	problems := parseLines(lines)
+	for i, prob := range problems {
+		fmt.Printf("Problem # %d : %s = \n", i+1, prob.q)
+		var answer string
+		fmt.Scanf("%s\n", &answer)
+		if answer == prob.a {
+			fmt.Println("Correct!")
+		}
+
+	}
+}
+
+func parseLines(lines [][]string) []problem {
+	returnSlice := make([]problem, len(lines))
+
+	for i, line := range lines {
+		returnSlice[i] = problem{
+			q: line[0],
+			a: line[1],
+		}
+	}
+
+	return returnSlice
+}
+
+type problem struct {
+	q string
+	a string
 }
 
 func exit(msg string) {
